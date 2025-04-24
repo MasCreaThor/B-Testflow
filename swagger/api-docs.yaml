@@ -1,0 +1,997 @@
+openapi: 3.0.0
+paths:
+  /:
+    get:
+      operationId: AppController_getHello
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - App
+  /auth/login:
+    post:
+      operationId: LoginController_handle
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Login
+  /auth/register:
+    post:
+      operationId: RegisterController_handle
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Register
+  /auth/refresh-token:
+    post:
+      operationId: RefreshTokenController_handle
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshTokenDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - RefreshToken
+  /auth/request-password-reset:
+    post:
+      operationId: ResetPasswordController_requestPasswordReset
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordRequestDto'
+      responses:
+        '201':
+          description: ''
+      tags: &ref_0
+        - ResetPassword
+  /auth/reset-password:
+    post:
+      operationId: ResetPasswordController_resetPassword
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordDto'
+      responses:
+        '201':
+          description: ''
+      tags: *ref_0
+  /auth/change-password:
+    post:
+      operationId: ChangePasswordController_changePassword
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - ChangePassword
+  /users:
+    post:
+      operationId: CreateUserController_handle
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - CreateUser
+    get:
+      operationId: FindAllUsersController_handle
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - FindAllUsers
+  /users/{id}:
+    get:
+      operationId: FindUserByIdController_handle
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - FindUserById
+  /users/test-connection:
+    get:
+      operationId: TestConnectionController_handle
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - TestConnection
+  /people:
+    get:
+      operationId: PeopleController_findAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags: &ref_1
+        - People
+    post:
+      operationId: PeopleController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePeopleDto'
+      responses:
+        '201':
+          description: ''
+      tags: *ref_1
+  /people/{id}:
+    get:
+      operationId: PeopleController_findById
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_1
+    put:
+      operationId: PeopleController_update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePeopleDto'
+      responses:
+        '200':
+          description: ''
+      tags: *ref_1
+    delete:
+      operationId: PeopleController_delete
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_1
+  /people/user/{userId}:
+    get:
+      operationId: PeopleController_findByUserId
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_1
+  /people/{peopleId}/study-goals/{goalId}:
+    post:
+      operationId: StudyGoalsProfileController_addStudyGoal
+      parameters:
+        - name: peopleId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: goalId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '201':
+          description: ''
+      tags: &ref_2
+        - StudyGoalsProfile
+    delete:
+      operationId: StudyGoalsProfileController_removeStudyGoal
+      parameters:
+        - name: peopleId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: goalId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_2
+  /study-goals:
+    get:
+      operationId: StudyGoalController_findAll
+      parameters:
+        - name: activeOnly
+          required: true
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: ''
+      tags: &ref_3
+        - StudyGoal
+    post:
+      operationId: StudyGoalController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateStudyGoalDto'
+      responses:
+        '201':
+          description: ''
+      tags: *ref_3
+  /study-goals/category/{categoryId}:
+    get:
+      operationId: StudyGoalController_findByCategory
+      parameters:
+        - name: categoryId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_3
+  /study-goals/{id}:
+    get:
+      operationId: StudyGoalController_findById
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_3
+    put:
+      operationId: StudyGoalController_update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_3
+    delete:
+      operationId: StudyGoalController_delete
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_3
+  /categories:
+    get:
+      operationId: CategoryController_findAll
+      parameters:
+        - name: activeOnly
+          required: true
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: ''
+      tags: &ref_4
+        - Category
+    post:
+      operationId: CategoryController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCategoryDto'
+      responses:
+        '201':
+          description: ''
+      tags: *ref_4
+  /categories/{id}:
+    get:
+      operationId: CategoryController_findById
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_4
+    put:
+      operationId: CategoryController_update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_4
+    delete:
+      operationId: CategoryController_delete
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_4
+  /roles:
+    get:
+      operationId: RoleController_findAll
+      parameters:
+        - name: activeOnly
+          required: true
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: ''
+      tags: &ref_5
+        - Role
+    post:
+      operationId: RoleController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRoleDto'
+      responses:
+        '201':
+          description: ''
+      tags: *ref_5
+  /roles/{id}:
+    get:
+      operationId: RoleController_findById
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_5
+    put:
+      operationId: RoleController_update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRoleDto'
+      responses:
+        '200':
+          description: ''
+      tags: *ref_5
+    delete:
+      operationId: RoleController_delete
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_5
+  /roles/{id}/permissions/{permissionName}:
+    post:
+      operationId: RoleController_addPermission
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: permissionName
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '201':
+          description: ''
+      tags: *ref_5
+    delete:
+      operationId: RoleController_removePermission
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: permissionName
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_5
+  /permissions:
+    get:
+      operationId: PermissionController_findAll
+      parameters:
+        - name: activeOnly
+          required: true
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: ''
+      tags: &ref_6
+        - Permission
+    post:
+      operationId: PermissionController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePermissionDto'
+      responses:
+        '201':
+          description: ''
+      tags: *ref_6
+  /permissions/group/{group}:
+    get:
+      operationId: PermissionController_findByGroup
+      parameters:
+        - name: group
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_6
+  /permissions/{id}:
+    get:
+      operationId: PermissionController_findById
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_6
+    put:
+      operationId: PermissionController_update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePermissionDto'
+      responses:
+        '200':
+          description: ''
+      tags: *ref_6
+    delete:
+      operationId: PermissionController_delete
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_6
+  /permissions/create-crud:
+    post:
+      operationId: PermissionController_createCrudPermissions
+      parameters: []
+      responses:
+        '201':
+          description: ''
+      tags: *ref_6
+  /user-roles:
+    get:
+      operationId: UserRoleController_findAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags: &ref_7
+        - UserRole
+    post:
+      operationId: UserRoleController_assignRole
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssignRoleDto'
+      responses:
+        '201':
+          description: ''
+      tags: *ref_7
+  /user-roles/{id}:
+    get:
+      operationId: UserRoleController_findById
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_7
+    delete:
+      operationId: UserRoleController_delete
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_7
+  /user-roles/user/{userId}:
+    get:
+      operationId: UserRoleController_findByUser
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_7
+  /user-roles/user/{userId}/role/{roleId}:
+    delete:
+      operationId: UserRoleController_removeRole
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: roleId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_7
+  /admin-check:
+    get:
+      operationId: AdminCheckController_checkAdminAccess
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - AdminCheck
+  /uploads/profile/{peopleId}:
+    post:
+      operationId: ProfileUploadController_uploadProfileImage
+      parameters:
+        - name: peopleId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '201':
+          description: ''
+      tags: &ref_8
+        - ProfileUpload
+    delete:
+      operationId: ProfileUploadController_deleteProfileImage
+      parameters:
+        - name: peopleId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_8
+  /admin/stats:
+    get:
+      operationId: AdminController_getStats
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Admin
+  /health:
+    get:
+      operationId: HealthController_check
+      parameters: []
+      responses:
+        '200':
+          description: The Health Check is successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  info:
+                    type: object
+                    example: &ref_9
+                      database: &ref_10
+                        status: up
+                    additionalProperties:
+                      type: object
+                      required:
+                        - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+                    nullable: true
+                  error:
+                    type: object
+                    example: {}
+                    additionalProperties:
+                      type: object
+                      required:
+                        - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+                    nullable: true
+                  details:
+                    type: object
+                    example: *ref_9
+                    additionalProperties:
+                      type: object
+                      required:
+                        - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+        '503':
+          description: The Health Check is not successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  info:
+                    type: object
+                    example: *ref_9
+                    additionalProperties:
+                      type: object
+                      required:
+                        - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+                    nullable: true
+                  error:
+                    type: object
+                    example:
+                      redis: &ref_11
+                        status: down
+                        message: Could not connect
+                    additionalProperties:
+                      type: object
+                      required:
+                        - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+                    nullable: true
+                  details:
+                    type: object
+                    example:
+                      database: *ref_10
+                      redis: *ref_11
+                    additionalProperties:
+                      type: object
+                      required:
+                        - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+      tags: &ref_15
+        - Health
+  /health/database:
+    get:
+      operationId: HealthController_checkDatabase
+      parameters: []
+      responses:
+        '200':
+          description: The Health Check is successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  info:
+                    type: object
+                    example: &ref_12
+                      database: &ref_13
+                        status: up
+                    additionalProperties:
+                      type: object
+                      required:
+                        - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+                    nullable: true
+                  error:
+                    type: object
+                    example: {}
+                    additionalProperties:
+                      type: object
+                      required:
+                        - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+                    nullable: true
+                  details:
+                    type: object
+                    example: *ref_12
+                    additionalProperties:
+                      type: object
+                      required:
+                        - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+        '503':
+          description: The Health Check is not successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  info:
+                    type: object
+                    example: *ref_12
+                    additionalProperties:
+                      type: object
+                      required:
+                        - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+                    nullable: true
+                  error:
+                    type: object
+                    example:
+                      redis: &ref_14
+                        status: down
+                        message: Could not connect
+                    additionalProperties:
+                      type: object
+                      required:
+                        - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+                    nullable: true
+                  details:
+                    type: object
+                    example:
+                      database: *ref_13
+                      redis: *ref_14
+                    additionalProperties:
+                      type: object
+                      required:
+                        - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+      tags: *ref_15
+  /diagnostic/database:
+    get:
+      operationId: DiagnosticController_checkDatabaseConnection
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Diagnostic
+info:
+  title: TestFlow API
+  description: API para la aplicación TestFlow
+  version: '1.0'
+  contact: {}
+tags: []
+servers: []
+components:
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+  schemas:
+    LoginDto:
+      type: object
+      properties: {}
+    RegisterDto:
+      type: object
+      properties: {}
+    RefreshTokenDto:
+      type: object
+      properties: {}
+    ResetPasswordRequestDto:
+      type: object
+      properties: {}
+    ResetPasswordDto:
+      type: object
+      properties: {}
+    ChangePasswordDto:
+      type: object
+      properties: {}
+    CreateUserDto:
+      type: object
+      properties: {}
+    CreatePeopleDto:
+      type: object
+      properties: {}
+    UpdatePeopleDto:
+      type: object
+      properties: {}
+    CreateStudyGoalDto:
+      type: object
+      properties: {}
+    CreateCategoryDto:
+      type: object
+      properties: {}
+    CreateRoleDto:
+      type: object
+      properties: {}
+    UpdateRoleDto:
+      type: object
+      properties: {}
+    CreatePermissionDto:
+      type: object
+      properties: {}
+    UpdatePermissionDto:
+      type: object
+      properties: {}
+    AssignRoleDto:
+      type: object
+      properties: {}
