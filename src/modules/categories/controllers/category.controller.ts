@@ -23,10 +23,11 @@ import { LoggerService } from '../../../shared/services/logger.service';
 /**
  * Controlador para la gestión de categorías
  * 
- * Requiere autenticación JWT y acceso de administrador para todas las operaciones
+ * Los endpoints GET son accesibles para todos los usuarios autenticados
+ * Los endpoints POST, PUT, DELETE requieren rol de administrador
  */
 @Controller('categories')
-@UseGuards(JwtAuthGuard, AdminAccessGuard)
+@UseGuards(JwtAuthGuard) // Solo requiere autenticación a nivel de controlador
 export class CategoryController {
   constructor(
     private readonly categoryService: CategoryService,
@@ -42,7 +43,8 @@ export class CategoryController {
    */
   @Get()
   @HttpCode(HttpStatus.OK)
-  async findAll(@Query('activeOnly') activeOnly: boolean = false): Promise<ICategory[]> {
+  async findAll(@Query('activeOnly') activeOnly: boolean = true): Promise<ICategory[]> {
+    // Por defecto, los estudiantes ven solo categorías activas
     this.logger.log(`Obteniendo todas las categorías. activeOnly=${activeOnly}`);
     return this.categoryService.findAll(activeOnly);
   }
@@ -65,6 +67,7 @@ export class CategoryController {
    * @returns Categoría creada
    */
   @Post()
+  @UseGuards(AdminAccessGuard) // Solo administradores pueden crear categorías
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() createCategoryDto: CreateCategoryDto): Promise<ICategory> {
     this.logger.log(`Creando nueva categoría: ${createCategoryDto.name}`);
@@ -78,6 +81,7 @@ export class CategoryController {
    * @returns Categoría actualizada
    */
   @Put(':id')
+  @UseGuards(AdminAccessGuard) // Solo administradores pueden actualizar categorías
   @HttpCode(HttpStatus.OK)
   async update(
     @Param('id') id: string,
@@ -93,6 +97,7 @@ export class CategoryController {
    * @returns Mensaje de confirmación
    */
   @Delete(':id')
+  @UseGuards(AdminAccessGuard) // Solo administradores pueden eliminar categorías
   @HttpCode(HttpStatus.OK)
   async delete(@Param('id') id: string): Promise<{ message: string }> {
     this.logger.log(`Eliminando categoría con ID: ${id}`);
